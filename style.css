@@ -55,6 +55,10 @@ body {
     background-color: #ffa500;
 }
 
+.hp-bar.medium {
+    background-color: #ffa500;
+}
+
 #UI {
     height: 10%;
     width: 100%;
@@ -113,4 +117,3 @@ body {
     font-size: 14px;
     color: #333;
 }
-
