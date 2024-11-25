@@ -2,5 +2,6 @@
 Batalla de Pokemones
 
 ##Integrantes 
--Velazquez Caudillo Osbaldo
--Portilla Hermenegildo Elizabeth
+
+- Velazquez Caudillo Osbaldo
+- Portilla Hermenegildo Elizabeth
