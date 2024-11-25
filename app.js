@@ -29,9 +29,6 @@ const btnAtkFis = document.querySelector('#btn-atk-fis');
 const btnAtkEsp = document.querySelector('#btn-atk-esp');
 const historialCombate = document.querySelector('#historialCombate');
 
-
-
-
 // Obtener Pokémon propio
 const obtenerPokePropio = () => {
     const num = input.value;
@@ -69,7 +66,6 @@ const obtenerPokeRival = () => {
         velocidadRival.innerHTML = data.stats[5].base_stat;
     });
 }
-
 
 const getNumRandom = () => Math.floor(Math.random() * 1001) + 1;
 
@@ -149,7 +145,6 @@ const tablaEfectividad = {
     }
 };
 
-
 // Obtener multiplicador de tipo
 const obtenerMultiplicador = (tipoAtaque, tipoRival) => {
     if (tablaEfectividad[tipoAtaque] && tablaEfectividad[tipoAtaque][tipoRival]) {
@@ -157,7 +152,6 @@ const obtenerMultiplicador = (tipoAtaque, tipoRival) => {
     }
     return 1; // Sin modificación de daño si el tipo no se encuentra
 };
-
 
 const mensajes = {
     jugador: [
@@ -182,7 +176,6 @@ const mensajes = {
         "¡No durarás ni tres turnos más, esto está decidido!"
     ]
 };
-
 
 //Historial de combate
 
@@ -303,7 +296,6 @@ const combate = (tipoAtaque) => {
         }
     }
 };
-
 
 //Funciones adicionales para estetica
 
