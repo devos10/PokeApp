@@ -73,7 +73,6 @@ const obtenerPokeRival = () =>{
 //Se turnarán los pokemon hasta que haya un ganador
 //Mostrar el ganador
 
-
 const mensajes = {
     jugador: [
         "¡Vamos a ganar!",
@@ -97,92 +96,128 @@ const mensajes = {
         "¡No durarás ni tres turnos más, esto está decidido!"
     ]
 };
+//Historial de combate
+
+// Función para registrar los movimientos en el historial
+function registrarMovimiento(mensaje) {
+    const movimiento = document.createElement('p');
+    movimiento.textContent = mensaje;
+    historialCombate.appendChild(movimiento);
+    historialCombate.scrollTop = historialCombate.scrollHeight; // Desplaza hacia el último movimiento
+}
 
 
+const obtenerFraseAleatoria = (hablante) => {
+    
+    const frasesHablante = mensajes[hablante];
+    if (!frasesHablante) return '...';
+    return frasesHablante[Math.floor(Math.random() * frasesHablante.length)];
+};
 
-const tablaEfectividad = {
-    acero: {
-        acero: 0.5, agua: 0.5, bicho: 1, dragón: 0.5, eléctrico: 0.5, fantasma: 1, fuego: 0.5, hielo: 2, lucha: 1, 
-        normal: 1, planta: 1, psíquico: 1, roca: 2, siniestro: 1, tierra: 1, veneno: 0.5, volador: 1, hada: 2
-    },
-    agua: {
-        fuego: 2, agua: 0.5, planta: 0.5, tierra: 2, roca: 2, dragón: 0.5, acero: 1, eléctrico: 1, bicho: 1, 
-        fantasma: 1, lucha: 1, normal: 1, psíquico: 1, siniestro: 1, veneno: 1, volador: 1, hielo: 1, hada: 1
-    },
-    bicho: {
-        planta: 2, psíquico: 2, siniestro: 2, fuego: 0.5, lucha: 0.5, veneno: 0.5, volador: 0.5, acero: 0.5,
-        agua: 1, bicho: 1, dragón: 1, eléctrico: 1, fantasma: 0.5, hielo: 1, normal: 1, roca: 1, tierra: 1, hada: 0.5
-    },
-    dragón: {
-        dragón: 2, acero: 0.5, hada: 0, fuego: 1, agua: 1, planta: 1, eléctrico: 1, bicho: 1, fantasma: 1, 
-        lucha: 1, normal: 1, psíquico: 1, roca: 1, siniestro: 1, veneno: 1, volador: 1, hielo: 1, tierra: 1
-    },
-    eléctrico: {
-        agua: 2, volador: 2, tierra: 0, planta: 0.5, eléctrico: 0.5, acero: 1, dragón: 0.5, bicho: 1, fantasma: 1,
-        fuego: 1, lucha: 1, hielo: 1, normal: 1, psíquico: 1, roca: 1, siniestro: 1, veneno: 1, hada: 1
-    },
-    fantasma: {
-        psíquico: 2, fantasma: 2, normal: 0, siniestro: 0.5, acero: 1, agua: 1, bicho: 1, dragón: 1, eléctrico: 1,
-        fuego: 1, hielo: 1, lucha: 1, planta: 1, roca: 1, tierra: 1, veneno: 1, volador: 1, hada: 1
-    },
-    fuego: {
-        planta: 2, hielo: 2, bicho: 2, acero: 2, agua: 0.5, roca: 0.5, fuego: 0.5, dragón: 0.5, tierra: 1,
-        eléctrico: 1, fantasma: 1, lucha: 1, normal: 1, psíquico: 1, siniestro: 1, veneno: 1, volador: 1, hada: 1
-    },
-    hada: {
-        dragón: 2, lucha: 2, siniestro: 2, fuego: 0.5, veneno: 0.5, acero: 0.5, agua: 1, bicho: 1, eléctrico: 1,
-        fantasma: 1, hielo: 1, normal: 1, planta: 1, psíquico: 1, roca: 1, tierra: 1, volador: 1, hada: 1
-    },
-    hielo: {
-        planta: 2, tierra: 2, volador: 2, dragón: 2, fuego: 0.5, agua: 0.5, hielo: 0.5, acero: 0.5, bicho: 1, 
-        eléctrico: 1, fantasma: 1, lucha: 1, normal: 1, psíquico: 1, roca: 1, siniestro: 1, veneno: 1, hada: 1
-    },
-    lucha: {
-        normal: 2, hielo: 2, roca: 2, siniestro: 2, acero: 2, veneno: 0.5, volador: 0.5, psíquico: 0.5, bicho: 0.5,
-        hada: 0.5, fantasma: 0, agua: 1, dragón: 1, eléctrico: 1, fuego: 1, lucha: 1, planta: 1, tierra: 1
-    },
-    normal: {
-        roca: 0.5, fantasma: 0, acero: 0.5, agua: 1, bicho: 1, dragón: 1, eléctrico: 1, fuego: 1, hielo: 1,
-        lucha: 1, planta: 1, psíquico: 1, siniestro: 1, tierra: 1, veneno: 1, volador: 1, hada: 1
-    },
-    planta: {
-        agua: 2, tierra: 2, roca: 2, fuego: 0.5, planta: 0.5, veneno: 0.5, volador: 0.5, bicho: 0.5, dragón: 0.5,
-        acero: 0.5, eléctrico: 1, fantasma: 1, hielo: 1, lucha: 1, normal: 1, psíquico: 1, siniestro: 1, hada: 1
-    },
-    psíquico: {
-        lucha: 2, veneno: 2, psíquico: 0.5, acero: 0.5, siniestro: 0, agua: 1, bicho: 1, dragón: 1, eléctrico: 1,
-        fantasma: 1, fuego: 1, hielo: 1, normal: 1, planta: 1, roca: 1, tierra: 1, volador: 1, hada: 1
-    },
-    roca: {
-        fuego: 2, hielo: 2, volador: 2, bicho: 2, lucha: 0.5, tierra: 0.5, acero: 0.5, agua: 1, dragón: 1,
-        eléctrico: 1, fantasma: 1, normal: 1, planta: 1, psíquico: 1, roca: 1, siniestro: 1, veneno: 1, hada: 1
-    },
-    siniestro: {
-        psíquico: 2, fantasma: 2, lucha: 0.5, siniestro: 0.5, hada: 0.5, acero: 1, agua: 1, bicho: 1, dragón: 1,
-        eléctrico: 1, fuego: 1, hielo: 1, normal: 1, planta: 1, roca: 1, tierra: 1, veneno: 1, volador: 1
-    },
-    tierra: {
-        fuego: 2, eléctrico: 2, veneno: 2, roca: 2, acero: 2, planta: 0.5, bicho: 0.5, volador: 0, agua: 1,
-        dragón: 1, fantasma: 1, hielo: 1, lucha: 1, normal: 1, psíquico: 1, siniestro: 1, hada: 1
-    },
-    veneno: {
-        planta: 2, hada: 2, veneno: 0.5, tierra: 0.5, roca: 0.5, fantasma: 0.5, acero: 0, agua: 1, bicho: 1,
-        dragón: 1, eléctrico: 1, fuego: 1, hielo: 1, lucha: 1, normal: 1, psíquico: 1, volador: 1, siniestro: 1
-    },
-    volador: {
-        planta: 2, lucha: 2, bicho: 2, eléctrico: 0.5, roca: 0.5, acero: 0.5, agua: 1, dragón: 1, fantasma: 1,
-        fuego: 1, hielo: 1, normal: 1, psíquico: 1, tierra: 1, veneno: 1, siniestro: 1, hada: 1
+const agregarAlHistorial = (hablante, frase) => {
+    const historialCombate = document.querySelector('#historialCombate');
+    const nuevaLinea = document.createElement('p');
+    nuevaLinea.textContent = `${hablante}: "${frase}"`;
+    historialCombate.appendChild(nuevaLinea);
+};
+const combate = (tipoAtaque) => {
+
+    let vidaPropia = parseInt(vidaProp.innerHTML);
+    let vidaDelRival = parseInt(vidaRival.innerHTML);
+
+    let velocidadPropia = parseInt(velocidadProp.innerHTML);
+    let velocidadDelRival = parseInt(velocidadRival.innerHTML);
+
+    let atkPropio = tipoAtaque === 'fisico' ? parseInt(atkFisProp.innerHTML) : parseInt(atkEspProp.innerHTML);
+    let atkRival = tipoAtaque === 'fisico' ? parseInt(atkFisRival.innerHTML) : parseInt(atkEspRival.innerHTML);
+
+    let defensaRival = tipoAtaque === 'fisico' ? parseInt(defensaFisRival.innerHTML) : parseInt(defensaEspRival.innerHTML);
+    let defensaPropia = tipoAtaque === 'fisico' ? parseInt(defensaFisProp.innerHTML) : parseInt(defensaEspProp.innerHTML);
+
+    registrarMovimiento(`${nombreProp.innerHTML} usa ${tipoAtaque === 'fisico' ? 'Ataque Físico' : 'Ataque Especial'}`);
+
+    if (velocidadPropia >= velocidadDelRival) {
+        let danoAlRival = Math.max(atkPropio - defensaRival, 1);
+        const multiplicador = obtenerMultiplicador(tipo1Prop.innerHTML, tipo1Rival.innerHTML);
+        danoAlRival *= multiplicador;
+        vidaDelRival -= danoAlRival;
+
+        if (vidaDelRival <= 0) {
+            vidaDelRival = 0;
+        }
+        vidaRival.innerHTML = vidaDelRival;
+        updateHP("poke-rival", vidaDelRival);
+        const fraseJugador = obtenerFraseAleatoria('jugador');
+        agregarAlHistorial('Tú', fraseJugador);
+        registrarMovimiento(`¡Golpe efectivo! ${nombreRival.innerHTML} recibe ${danoAlRival} de daño`);
+
+        if (vidaDelRival === 0) {
+            registrarMovimiento(`¡${nombreProp.innerHTML} gana el combate!`);
+            return;
+        }
+
+        let danoAPropio = Math.max(atkRival - defensaPropia, 1);
+        const multiplicadorRival = obtenerMultiplicador(tipo1Rival.innerHTML, tipo1Prop.innerHTML);
+        danoAPropio *= multiplicadorRival;
+        vidaPropia -= danoAPropio;
+
+        if (vidaPropia <= 0) {
+            vidaPropia = 0;
+        }
+        vidaProp.innerHTML = vidaPropia;
+        updateHP("poke-propio", vidaPropia);
+        const fraseRival = obtenerFraseAleatoria('rival');
+        agregarAlHistorial('Rival', fraseRival);
+        registrarMovimiento(`${nombreRival.innerHTML} contraataca y causa ${danoAPropio} de daño`);
+
+        if (vidaPropia === 0) {
+            registrarMovimiento(`¡${nombreRival.innerHTML} gana el combate!`);
+            return;
+        }
+
+    } else {
+        let danoAPropio = Math.max(atkRival - defensaPropia, 1);
+        const multiplicadorRival = obtenerMultiplicador(tipo1Rival.innerHTML, tipo1Prop.innerHTML);
+        danoAPropio *= multiplicadorRival;
+        vidaPropia -= danoAPropio;
+
+        if (vidaPropia <= 0) {
+            vidaPropia = 0;
+        }
+        vidaProp.innerHTML = vidaPropia;
+        updateHP("poke-propio", vidaPropia);
+        const fraseRival = obtenerFraseAleatoria('rival');
+        agregarAlHistorial('Rival', fraseRival);
+        registrarMovimiento(`${nombreRival.innerHTML} usa ${tipoAtaque === 'fisico' ? 'Ataque Físico' : 'Ataque Especial'} y causa ${danoAPropio} de daño`);
+
+        if (vidaPropia === 0) {
+            registrarMovimiento(`¡${nombreRival.innerHTML} gana el combate!`);
+            return;
+        }
+
+        let danoAlRival = Math.max(atkPropio - defensaRival, 1);
+        const multiplicador = obtenerMultiplicador(tipo1Prop.innerHTML, tipo1Rival.innerHTML);
+        danoAlRival *= multiplicador;
+        vidaDelRival -= danoAlRival;
+
+        if (vidaDelRival <= 0) {
+            vidaDelRival = 0;
+        }
+        vidaRival.innerHTML = vidaDelRival;
+        updateHP("poke-rival", vidaDelRival);
+        const fraseJugador = obtenerFraseAleatoria('jugador');
+        agregarAlHistorial('Tú', fraseJugador);
+        registrarMovimiento(`¡Golpe efectivo! ${nombreRival.innerHTML} recibe ${danoAlRival} de daño`);
+
+        if (vidaDelRival === 0) {
+            registrarMovimiento(`¡${nombreProp.innerHTML} gana el combate!`);
+            return;
+        }
     }
 };
 
 
-// Obtener multiplicador de tipo
-const obtenerMultiplicador = (tipoAtaque, tipoRival) => {
-    if (tablaEfectividad[tipoAtaque] && tablaEfectividad[tipoAtaque][tipoRival]) {
-        return tablaEfectividad[tipoAtaque][tipoRival];
-    }
-    return 1; // Sin modificación de daño si el tipo no se encuentra
-};
+
 
 const combate = ()=>{
     
@@ -208,13 +243,9 @@ function updateHP(pokemon, hp) {
         hpBar.classList.remove("low", "medium");
     }
 }
+
 window.addEventListener('load', obtenerPokeRival);
 
 btnElegir.addEventListener('click', obtenerPokePropio);
 
-
 btnPelear.addEventListener();
-
-btnPelear.addEventListener();
-
-
