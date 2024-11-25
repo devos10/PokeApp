@@ -55,14 +55,31 @@ body {
     background-color: #ffa500;
 }
 
-.arena {
+.hp-bar.medium {
+    background-color: #ffa500;
+}
 
+#UI {
+    height: 10%;
+    width: 100%;
     display: flex;
-    height: 300px;
-    background-image: url('./fondo.png');
-    background-repeat: no-repeat;
-    background-size: contain;
+    justify-content: center;
+    align-items: center;
+    margin-top: 10px;
+}
 
+.arena {
+    width: 100vw; /* 100% del ancho de la ventana */
+    height: 100vh; /* 100% del alto de la ventana */
+    /*background-image: url('./fondo.png');*/
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0;
+    padding: 0;
+    position: relative;
 }
 
 #pokeProp {
