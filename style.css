@@ -22,6 +22,18 @@ body {
     box-sizing: border-box;
 }
 
+.hp-bar {
+    height: 100%;
+    background-color: #4CAF50;
+    border-radius: 8px;
+    width: 100%;
+    transition: width 0.3s ease;
+    color: #fff;
+    font-size: 12px;
+    text-align: center;
+}
+
+
 .arena {
 
     display: flex;
