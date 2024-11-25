@@ -157,14 +157,3 @@ const obtenerMultiplicador = (tipoAtaque, tipoRival) => {
     return 1; // Sin modificación de daño si el tipo no se encuentra
 };
 
-const combate = ()=>{
-    
-    
-}
-
-
-window.addEventListener('load', obtenerPokeRival);
-
-btnElegir.addEventListener('click', obtenerPokePropio);
-
-btnPelear.addEventListener();
