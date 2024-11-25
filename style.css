@@ -1,0 +1,23 @@
+.arena {
+
+    display: flex;
+    height: 300px;
+    background-image: url('./fondo.png');
+    background-repeat: no-repeat;
+    background-size: contain;
+
+}
+
+#pokeProp {
+    height: 150px;
+    position: fixed;
+    top: 430px;
+    left: 100px;
+}
+
+#pokeRival {
+    height: 150px;
+    position: fixed;
+    top: 370px;
+    left: 300px;
+}
