@@ -73,7 +73,33 @@ const obtenerPokeRival = () =>{
 //Se turnarán los pokemon hasta que haya un ganador
 //Mostrar el ganador
 
- luis_salazar
+
+const mensajes = {
+    jugador: [
+        "¡Vamos a ganar!",
+        "¡Usa tu mejor ataque!",
+        "¡Podemos hacerlo!",
+        "¡Lucha con todo!",
+        "¡Vamos con todo!",
+        "¡No te rindas!",
+        "¡Es nuestra oportunidad!",
+        "¡Sigue luchando!",
+        "¡Esto apenas comienza, aún no he mostrado mi verdadero potencial!",
+        "No me subestimes, ¡tengo un as bajo la manga!",
+        "¡Mi vínculo con mis Pokémon es más fuerte que cualquier cosa!",
+        "¡Un movimiento más y esta batalla será mía!"
+    ],
+    rival: [
+        "¡No tienes oportunidad contra mi equipo invencible!",
+        "¿Eso es todo lo que tienes? ¡Qué decepción!",
+        "¡Mi estrategia es imbatible, prepárate para perder!",
+        "Voy a demostrarte quién es el verdadero maestro Pokémon.",
+        "¡No durarás ni tres turnos más, esto está decidido!"
+    ]
+};
+
+
+
 const tablaEfectividad = {
     acero: {
         acero: 0.5, agua: 0.5, bicho: 1, dragón: 0.5, eléctrico: 0.5, fantasma: 1, fuego: 0.5, hielo: 2, lucha: 1, 
@@ -157,6 +183,7 @@ const obtenerMultiplicador = (tipoAtaque, tipoRival) => {
     }
     return 1; // Sin modificación de daño si el tipo no se encuentra
 };
+
 const combate = ()=>{
     
     
@@ -167,5 +194,9 @@ window.addEventListener('load', obtenerPokeRival);
 
 btnElegir.addEventListener('click', obtenerPokePropio);
 
+
 btnPelear.addEventListener();
-master
+
+btnPelear.addEventListener();
+
+
