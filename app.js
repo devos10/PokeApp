@@ -108,6 +108,13 @@ function registrarMovimiento(mensaje) {
 
 
 const obtenerFraseAleatoria = (hablante) => {
+
+    
+    const frasesHablante = mensajes[hablante];
+    if (!frasesHablante) return '...';
+    return frasesHablante[Math.floor(Math.random() * frasesHablante.length)];
+};
+
     
     const frasesHablante = mensajes[hablante];
     if (!frasesHablante) return '...';
@@ -244,8 +251,113 @@ function updateHP(pokemon, hp) {
     }
 }
 
-window.addEventListener('load', obtenerPokeRival);
 
+const agregarAlHistorial = (hablante, frase) => {
+    const historialCombate = document.querySelector('#historialCombate');
+    const nuevaLinea = document.createElement('p');
+    nuevaLinea.textContent = `${hablante}: "${frase}"`;
+    historialCombate.appendChild(nuevaLinea);
+};
+const combate = (tipoAtaque) => {
+
+    let vidaPropia = parseInt(vidaProp.innerHTML);
+    let vidaDelRival = parseInt(vidaRival.innerHTML);
+
+    let velocidadPropia = parseInt(velocidadProp.innerHTML);
+    let velocidadDelRival = parseInt(velocidadRival.innerHTML);
+
+    let atkPropio = tipoAtaque === 'fisico' ? parseInt(atkFisProp.innerHTML) : parseInt(atkEspProp.innerHTML);
+    let atkRival = tipoAtaque === 'fisico' ? parseInt(atkFisRival.innerHTML) : parseInt(atkEspRival.innerHTML);
+
+    let defensaRival = tipoAtaque === 'fisico' ? parseInt(defensaFisRival.innerHTML) : parseInt(defensaEspRival.innerHTML);
+    let defensaPropia = tipoAtaque === 'fisico' ? parseInt(defensaFisProp.innerHTML) : parseInt(defensaEspProp.innerHTML);
+
+    registrarMovimiento(`${nombreProp.innerHTML} usa ${tipoAtaque === 'fisico' ? 'Ataque Físico' : 'Ataque Especial'}`);
+
+    if (velocidadPropia >= velocidadDelRival) {
+        let danoAlRival = Math.max(atkPropio - defensaRival, 1);
+        const multiplicador = obtenerMultiplicador(tipo1Prop.innerHTML, tipo1Rival.innerHTML);
+        danoAlRival *= multiplicador;
+        vidaDelRival -= danoAlRival;
+
+        if (vidaDelRival <= 0) {
+            vidaDelRival = 0;
+        }
+        vidaRival.innerHTML = vidaDelRival;
+        updateHP("poke-rival", vidaDelRival);
+        const fraseJugador = obtenerFraseAleatoria('jugador');
+        agregarAlHistorial('Tú', fraseJugador);
+        registrarMovimiento(`¡Golpe efectivo! ${nombreRival.innerHTML} recibe ${danoAlRival} de daño`);
+
+        if (vidaDelRival === 0) {
+            registrarMovimiento(`¡${nombreProp.innerHTML} gana el combate!`);
+            return;
+        }
+
+        let danoAPropio = Math.max(atkRival - defensaPropia, 1);
+        const multiplicadorRival = obtenerMultiplicador(tipo1Rival.innerHTML, tipo1Prop.innerHTML);
+        danoAPropio *= multiplicadorRival;
+        vidaPropia -= danoAPropio;
+
+        if (vidaPropia <= 0) {
+            vidaPropia = 0;
+        }
+        vidaProp.innerHTML = vidaPropia;
+        updateHP("poke-propio", vidaPropia);
+        const fraseRival = obtenerFraseAleatoria('rival');
+        agregarAlHistorial('Rival', fraseRival);
+        registrarMovimiento(`${nombreRival.innerHTML} contraataca y causa ${danoAPropio} de daño`);
+
+        if (vidaPropia === 0) {
+            registrarMovimiento(`¡${nombreRival.innerHTML} gana el combate!`);
+            return;
+        }
+
+    } else {
+        let danoAPropio = Math.max(atkRival - defensaPropia, 1);
+        const multiplicadorRival = obtenerMultiplicador(tipo1Rival.innerHTML, tipo1Prop.innerHTML);
+        danoAPropio *= multiplicadorRival;
+        vidaPropia -= danoAPropio;
+
+        if (vidaPropia <= 0) {
+            vidaPropia = 0;
+        }
+        vidaProp.innerHTML = vidaPropia;
+        updateHP("poke-propio", vidaPropia);
+        const fraseRival = obtenerFraseAleatoria('rival');
+        agregarAlHistorial('Rival', fraseRival);
+        registrarMovimiento(`${nombreRival.innerHTML} usa ${tipoAtaque === 'fisico' ? 'Ataque Físico' : 'Ataque Especial'} y causa ${danoAPropio} de daño`);
+
+        if (vidaPropia === 0) {
+            registrarMovimiento(`¡${nombreRival.innerHTML} gana el combate!`);
+            return;
+        }
+
+        let danoAlRival = Math.max(atkPropio - defensaRival, 1);
+        const multiplicador = obtenerMultiplicador(tipo1Prop.innerHTML, tipo1Rival.innerHTML);
+        danoAlRival *= multiplicador;
+        vidaDelRival -= danoAlRival;
+
+        if (vidaDelRival <= 0) {
+            vidaDelRival = 0;
+        }
+        vidaRival.innerHTML = vidaDelRival;
+        updateHP("poke-rival", vidaDelRival);
+        const fraseJugador = obtenerFraseAleatoria('jugador');
+        agregarAlHistorial('Tú', fraseJugador);
+        registrarMovimiento(`¡Golpe efectivo! ${nombreRival.innerHTML} recibe ${danoAlRival} de daño`);
+
+        if (vidaDelRival === 0) {
+            registrarMovimiento(`¡${nombreProp.innerHTML} gana el combate!`);
+            return;
+        }
+    }
+};
+
+// Eventos para elegir el tipo de ataque
 btnElegir.addEventListener('click', obtenerPokePropio);
+btnAtkFis.addEventListener('click', () => combate('fisico'));
+btnAtkEsp.addEventListener('click', () => combate('especial'));
 
-btnPelear.addEventListener();
+// Cargar Pokémon rival automáticamente al iniciar
+window.addEventListener('load', obtenerPokeRival);
