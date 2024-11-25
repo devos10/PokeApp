@@ -73,6 +73,7 @@ const obtenerPokeRival = () =>{
 //Se turnarán los pokemon hasta que haya un ganador
 //Mostrar el ganador
 
+ luis_salazar
 const tablaEfectividad = {
     acero: {
         acero: 0.5, agua: 0.5, bicho: 1, dragón: 0.5, eléctrico: 0.5, fantasma: 1, fuego: 0.5, hielo: 2, lucha: 1, 
@@ -156,4 +157,15 @@ const obtenerMultiplicador = (tipoAtaque, tipoRival) => {
     }
     return 1; // Sin modificación de daño si el tipo no se encuentra
 };
+const combate = ()=>{
+    
+    
+}
 
+
+window.addEventListener('load', obtenerPokeRival);
+
+btnElegir.addEventListener('click', obtenerPokePropio);
+
+btnPelear.addEventListener();
+master
