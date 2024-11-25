@@ -45,15 +45,28 @@ body {
 }
 
 #pokeProp {
-    height: 150px;
-    position: fixed;
-    top: 430px;
-    left: 100px;
+    position: absolute;
+    bottom: 11%;
+    left: 36%;
+    width: 12%; /* Ajusta el tamaño según el Pokémon */
+    z-index: 1;
 }
 
 #pokeRival {
-    height: 150px;
-    position: fixed;
-    top: 370px;
-    left: 300px;
+    position: absolute;
+    bottom: 38%;
+    right: 37%;
+    width: 13%; /* Ajusta el tamaño según el Pokémon */
+    z-index: 1;
+}
+
+.combat-log {
+    width: 30%;
+    padding: 10px;
+    background-color: rgba(71, 127, 225, 0.9); /* Fondo semitransparente para el historial de combate*/
+    margin: 0 20px;
+    text-align: center;
+    max-height: 200px;
+    overflow-y: auto;
+    border: 1px solid #ccc;
 }
